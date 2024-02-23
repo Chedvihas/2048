@@ -48,4 +48,47 @@ var updateTile = (tile,num) => {
     }
 }
 
-document.addEventListener("keyup");
+document.addEventListener("keyup", (e) => {
+    if(e.code=="ArrowLeft"){
+        slideLeft();
+    }
+}
+)
+
+
+var filterZero = (row) => {
+    return row.filter(num=>num!=0);
+}
+
+var slide = (row) => {
+row = filterZero(row);
+
+
+for(let i=0;i<row.length - 1; i++){
+
+    if(row[i]==row[i+1]){
+        row[i] += row[i+1];
+        row[i+1] = 0;
+        score+=row[i];
+    }
+}
+
+row = filterZero(row);
+return row;
+
+}
+
+
+var slideLeft = () =>{
+    for(let r=0;r<rows;r++){
+        let row = board[r];
+        row = slide(row);
+        board[r] = row;
+
+        for(let c=0;c<columns;c++){
+            let tile = document.getElementById(r.toString() + "-" + c.toString());
+            updateTile(tile, board[r][c]);
+        }
+    }
+}
+
