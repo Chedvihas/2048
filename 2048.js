@@ -113,25 +113,41 @@ document.addEventListener("keyup", (e) => {
 )
 
 
-var pointerStartX = 0;
-var pointerStartY = 0;
-var pointerEndX = 0;
-var pointerEndY = 0;
+var swipeStartX = 0;
+var swipeStartY = 0;
+var swipeEndX = 0;
+var swipeEndY = 0;
 
-document.addEventListener('pointerdown', function(event) {
-    pointerStartX = event.clientX;
-    pointerStartY = event.clientY;
-}, false);
+document.addEventListener('pointerdown', handleSwipeStart, false);
+document.addEventListener('touchstart', handleSwipeStart, false);
 
-document.addEventListener('pointerup', function(event) {
-    pointerEndX = event.clientX;
-    pointerEndY = event.clientY;
+document.addEventListener('pointerup', handleSwipeEnd, false);
+document.addEventListener('touchend', handleSwipeEnd, false);
+
+function handleSwipeStart(event) {
+    if (event.type === 'touchstart') {
+        swipeStartX = event.touches[0].clientX;
+        swipeStartY = event.touches[0].clientY;
+    } else if (event.type === 'pointerdown') {
+        swipeStartX = event.clientX;
+        swipeStartY = event.clientY;
+    }
+}
+
+function handleSwipeEnd(event) {
+    if (event.type === 'touchend') {
+        swipeEndX = event.changedTouches[0].clientX;
+        swipeEndY = event.changedTouches[0].clientY;
+    } else if (event.type === 'pointerup') {
+        swipeEndX = event.clientX;
+        swipeEndY = event.clientY;
+    }
     handleGesture();
-}, false);
+}
 
 function handleGesture() {
-    const dx = pointerEndX - pointerStartX;
-    const dy = pointerEndY - pointerStartY;
+    const dx = swipeEndX - swipeStartX;
+    const dy = swipeEndY - swipeStartY;
     if (Math.abs(dx) > Math.abs(dy)) {
         if (dx > 0) {
             // Swipe right
@@ -154,8 +170,6 @@ function handleGesture() {
         }
     }
 }
-
-
 
 
 var filterZero = (row) => {
