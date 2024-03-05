@@ -173,6 +173,7 @@ function handleGesture() {
             setTwo();
         }
     }
+    document.getElementById("score").innerText = score;
 }
 
 
