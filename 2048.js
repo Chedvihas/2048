@@ -90,6 +90,7 @@ var updateTile = (tile,num) => {
     }
 }
 
+
 document.addEventListener("keyup", (e) => {
     if(e.code=="ArrowLeft"){
         slideLeft();
