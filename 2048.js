@@ -113,6 +113,51 @@ document.addEventListener("keyup", (e) => {
 )
 
 
+var pointerStartX = 0;
+var pointerStartY = 0;
+var pointerEndX = 0;
+var pointerEndY = 0;
+
+document.addEventListener('pointerdown', function(event) {
+    pointerStartX = event.clientX;
+    pointerStartY = event.clientY;
+}, false);
+
+document.addEventListener('pointerup', function(event) {
+    pointerEndX = event.clientX;
+    pointerEndY = event.clientY;
+    handleGesture();
+}, false);
+
+function handleGesture() {
+    const dx = pointerEndX - pointerStartX;
+    const dy = pointerEndY - pointerStartY;
+    if (Math.abs(dx) > Math.abs(dy)) {
+        if (dx > 0) {
+            // Swipe right
+            slideRight();
+            setTwo();
+        } else {
+            // Swipe left
+            slideLeft();
+            setTwo();
+        }
+    } else {
+        if (dy > 0) {
+            // Swipe down
+            slideDown();
+            setTwo();
+        } else {
+            // Swipe up
+            slideUp();
+            setTwo();
+        }
+    }
+}
+
+
+
+
 var filterZero = (row) => {
     return row.filter(num=>num!=0);
 }
