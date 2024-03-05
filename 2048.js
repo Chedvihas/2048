@@ -136,6 +136,7 @@ function handleSwipeStart(event) {
         swipeStartX = event.clientX;
         swipeStartY = event.clientY;
     }
+    
 }
 
 function handleSwipeEnd(event) {
@@ -146,7 +147,9 @@ function handleSwipeEnd(event) {
         swipeEndX = event.clientX;
         swipeEndY = event.clientY;
     }
+    
     handleGesture();
+    document.getElementById("score").innerText = score;
 }
 
 function handleGesture() {
@@ -173,7 +176,6 @@ function handleGesture() {
             setTwo();
         }
     }
-    document.getElementById("score").innerText = score;
 }
 
 
