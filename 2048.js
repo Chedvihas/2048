@@ -6,6 +6,9 @@ var columns = 4;
 window.onload = function(){
     setGame();
 }
+document.addEventListener('touchmove', function(e) {
+    e.preventDefault();
+}, { passive: false });
 
 
 var setGame = () => {
