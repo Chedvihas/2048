@@ -44,6 +44,31 @@ var setGame = () => {
 }
 
 
+var isGameOver = () => {
+    // Check for empty cells and adjacent cells with the same value
+    for (var i = 0; i < 4; i++) {
+        for (var j = 0; j < 4; j++) {
+            // Check for empty cell
+            if (board[i][j] == 0) {
+                return false;
+            }
+
+            // Check for adjacent cells with the same value in rows
+            if (j < 3 && board[i][j] == board[i][j + 1]) {
+                return false;
+            }
+
+            // Check for adjacent cells with the same value in columns
+            if (i < 3 && board[i][j] == board[i + 1][j]) {
+                return false;
+            }
+        }
+    }
+    document.getElementById("overlay").style.display = "block";
+    return true;
+}
+
+
 var hasEmptyTile = () =>{
     for(let r=0;r<rows;r++){
         for(let c=0;c<columns;c++){
@@ -95,7 +120,11 @@ var updateTile = (tile,num) => {
 
 
 document.addEventListener("keyup", (e) => {
-    if(e.code=="ArrowLeft"){
+    if(isGameOver()){
+        console.log("game over");
+    }
+
+   else if(e.code=="ArrowLeft"){
         slideLeft();
         setTwo();
     }
@@ -122,31 +151,32 @@ var swipeStartY = 0;
 var swipeEndX = 0;
 var swipeEndY = 0;
 
-document.addEventListener('pointerdown', handleSwipeStart, false);
+// document.addEventListener('pointerdown', handleSwipeStart, false);
 document.addEventListener('touchstart', handleSwipeStart, false);
 
-document.addEventListener('pointerup', handleSwipeEnd, false);
+// document.addEventListener('pointerup', handleSwipeEnd, false);
 document.addEventListener('touchend', handleSwipeEnd, false);
 
 function handleSwipeStart(event) {
-    if (event.type === 'touchstart') {
+    if(isGameOver()){
+        console.log("game over");
+    }
+    else if (event.type === 'touchstart') {
         swipeStartX = event.touches[0].clientX;
         swipeStartY = event.touches[0].clientY;
-    } else if (event.type === 'pointerdown') {
-        swipeStartX = event.clientX;
-        swipeStartY = event.clientY;
-    }
+    } 
     
 }
 
 function handleSwipeEnd(event) {
-    if (event.type === 'touchend') {
+    if(isGameOver()){
+        console.log("game over");
+    }
+
+    else if (event.type === 'touchend') {
         swipeEndX = event.changedTouches[0].clientX;
         swipeEndY = event.changedTouches[0].clientY;
-    } else if (event.type === 'pointerup') {
-        swipeEndX = event.clientX;
-        swipeEndY = event.clientY;
-    }
+    } 
     
     handleGesture();
     document.getElementById("score").innerText = score;
